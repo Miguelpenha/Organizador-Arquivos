@@ -1,13 +1,11 @@
 import { Container, Text } from '../styles/pages'
-import { config } from '../store'
+import { Outlet } from 'react-router-dom'
 
 export default function Index() {
-  window.electron.setTheme('omni')
-  // config.get('theme')
-
   return (
     <Container>
       <Text>Organizador de arquivos</Text>
+      <Outlet/>
     </Container>
   )
 }

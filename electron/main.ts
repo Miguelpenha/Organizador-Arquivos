@@ -1,5 +1,6 @@
 import { app, BrowserWindow, ipcMain } from 'electron'
 import path from 'path'
+import { get, set } from './store'
 
 let mainWindow: BrowserWindow | null
 
@@ -9,8 +10,6 @@ declare const MAIN_WINDOW_PRELOAD_WEBPACK_ENTRY: string
 function createWindow() {
   mainWindow = new BrowserWindow({
     icon: process.env.NODE_DEVELOPMENT ? path.resolve(__dirname, '..', '..', 'assets', 'icon.ico') : path.resolve(__dirname, '..', '..', '..', 'assets', 'icon.ico'),
-    width: 1100,
-    height: 700,
     backgroundColor: '#191622',
     webPreferences: {
       nodeIntegration: true,
@@ -19,23 +18,35 @@ function createWindow() {
     }
   })
 
+  mainWindow.maximize()
 
   mainWindow.loadURL(MAIN_WINDOW_WEBPACK_ENTRY)
 
   mainWindow.on('closed', () => mainWindow = null)
-  
 }
 
 
+declare global {
+  namespace NodeJS {
+    interface ProcessEnv {
+      USERPROFILE: string
+    }
+  }
+}
 
 function registerListeners() {
+  if (!get('theme')) {
+    console.log(get('theme'))
+    set('theme', 'omni')
+  }
+
   ipcMain.on('message', (ev, message) => console.log(message))
+
   ipcMain.on('setTheme', (ev, theme) => {
-    console.log(theme)
+    set('theme', theme)
+    mainWindow?.reload()
   })
 }
-
-
 
 app.on('ready', createWindow)
   .whenReady()

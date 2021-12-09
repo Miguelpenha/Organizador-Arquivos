@@ -1,5 +1,7 @@
 import { contextBridge, ipcRenderer } from 'electron'
-import theme from './theme'
+import { get } from './store/index'
+import fs from 'fs'
+import path from 'path'
 
 export const api = {
   sendMessage: (message: string) => {
@@ -13,8 +15,10 @@ export const api = {
   send: (channel: string, data?:any) => {
     ipcRenderer.send(channel, data)
   },
-  theme: () => theme,
-  setTheme: (theme: string) => ipcRenderer.send('setTheme', theme)
+  theme: () => process.env.NODE_DEVELOPMENT ? JSON.parse(fs.readFileSync(path.resolve(__dirname, '..', '..', '..', 'themes', `${get('theme')}.json`)).toString('utf-8')) : JSON.parse(fs.readFileSync(path.resolve(__dirname, '..', '..', '..', '..', 'themes', `${get('theme')}.json`)).toString('utf-8')),
+  setTheme: (theme: string) => {
+    ipcRenderer.send('setTheme', theme)
+  }
 }
 
 contextBridge.exposeInMainWorld('electron', api)
