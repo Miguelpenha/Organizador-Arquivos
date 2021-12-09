@@ -1,7 +1,7 @@
 module.exports = [
   {
     test: /\.node$/,
-    use: 'node-loader',
+    use: 'node-loader'
   },
   {
     test: /\.(m?js|node)$/,
@@ -9,9 +9,9 @@ module.exports = [
     use: {
       loader: '@marshallofsound/webpack-asset-relocator-loader',
       options: {
-        outputAssetBase: 'native_modules',
-      },
-    },
+        outputAssetBase: 'native_modules'
+      }
+    }
   },
   {
     test: /\.(js|ts|tsx)$/,
@@ -24,7 +24,7 @@ module.exports = [
     test: /\.(png|jpe?g|gif)$/i,
     loader: 'file-loader',
     options: {
-      name: '[path][name].[ext]',
-    },
+      name: '[path][name].[ext]'
+    }
   }
 ]

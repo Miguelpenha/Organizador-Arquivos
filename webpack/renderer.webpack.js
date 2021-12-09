@@ -3,6 +3,6 @@ module.exports = {
     extensions: ['.ts', '.tsx', '.js']
   },
   module: {
-    rules: require('./rules.webpack'),
-  },
+    rules: require('./rules.webpack')
+  }
 }

@@ -1,12 +1,13 @@
 import { GlobalStyle } from './styles/GlobalStyle'
+import Index from './pages'
 
-import { Greetings } from './components/Greetings'
+export default function App() {
+  
 
-export function App() {
   return (
     <>
-      <GlobalStyle />
-      <Greetings />
+      <GlobalStyle/>
+      <Index/>
     </>
   )
 }

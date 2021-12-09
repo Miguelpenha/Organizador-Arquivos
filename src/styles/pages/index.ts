@@ -1,13 +1,4 @@
-import styled, { keyframes } from 'styled-components'
-
-const rotate = keyframes`
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
-`
+import styled from 'styled-components'
 
 export const Container = styled.div`
   height: 100vh;
@@ -20,11 +11,6 @@ export const Container = styled.div`
   button {
     margin-top: 24px;
   }
-`
-
-export const Image = styled.img`
-  width: 240px;
-  animation: ${rotate} 15s linear infinite;
 `
 
 export const Text = styled.p`
