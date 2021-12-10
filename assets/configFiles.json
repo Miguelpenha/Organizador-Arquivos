@@ -1,0 +1,94 @@
+{
+    "planilhas": [
+        "xlsx",
+        "csv",
+        "tsv",
+        "ods"
+    ],
+    "textos": [
+        "docx",
+        "txt",
+        "epub",
+        "odt",
+        "rtf"
+    ],
+    "pdfs": [
+        "pdf"
+    ]
+    ,
+    "vídeos": [
+        "mp4",
+        "avi",
+        "mpg",
+        "mov",
+        "flv",
+        "3gp",
+        "webm",
+        "mkv",
+        "gif"
+    ],
+    "áudios": [
+        "mp3",
+        "wav",
+        "m4a",
+        "flac",
+        "ogg",
+        "mp2",
+        "amr",
+        "m4r"
+    ],
+    "dev": [
+        "js",
+        "py",
+        "jsx",
+        "tsx",
+        "html",
+        "ts",
+        "code-workspace",
+        "css",
+        "json",
+        "md"
+    ],
+    "imagens": [
+        "jpg",
+        "png",
+        "psd",
+        "tiff",
+        "webp",
+        "bmp",
+        "heic",
+        "jp2",
+        "hdr",
+        "dds",
+        "exr",
+        "fts",
+        "heif",
+        "jfif",
+        "jpe",
+        "jps",
+        "mng",
+        "pam",
+        "pbm",
+        "pcd",
+        "pcx",
+        "pes",
+        "pfm",
+        "pgm",
+        "picon",
+        "pict",
+        "pnm",
+        "ppm",
+        "sgi",
+        "tga",
+        "wbmp",
+        "xbm",
+        "xpm",
+        "xwd",
+        "jpg",
+        "svg"
+    ],
+    "slides": [
+        "pptx",
+        "odp"
+    ]
+}

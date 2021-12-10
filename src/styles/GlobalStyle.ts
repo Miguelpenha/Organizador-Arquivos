@@ -1,6 +1,6 @@
 import { createGlobalStyle } from 'styled-components'
 
-const theme = window.electron.theme()
+const theme = window.electron.theme.get()
 
 export const GlobalStyle = createGlobalStyle`
   * {
@@ -11,7 +11,7 @@ export const GlobalStyle = createGlobalStyle`
     color: ${theme.color};
   }
 
-  html, body, #root {
+  html, body {
     height: 100%;
   }
 
