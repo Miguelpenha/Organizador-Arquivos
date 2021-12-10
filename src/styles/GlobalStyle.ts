@@ -11,6 +11,10 @@ export const GlobalStyle = createGlobalStyle`
     color: ${theme.color};
   }
 
+  html, body, #root {
+    height: 100%;
+  }
+
   body {
     font-family: Arial, Helvetica, sans-serif;
     font-size: 16px;

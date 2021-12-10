@@ -4,7 +4,7 @@ interface Itheme {
     CurrentLine: string,
     Selection: string,
     color: string,
-    Comment: string,
+    comment: string,
     Cyan: string,
     Green: string,
     Orange: string,

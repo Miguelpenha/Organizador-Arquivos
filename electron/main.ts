@@ -1,6 +1,7 @@
 import { app, BrowserWindow, ipcMain } from 'electron'
 import path from 'path'
 import { get, set } from './store'
+import fs from 'fs'
 
 let mainWindow: BrowserWindow | null
 
@@ -40,12 +41,14 @@ function registerListeners() {
     set('theme', 'omni')
   }
 
-  ipcMain.on('message', (ev, message) => console.log(message))
+  ipcMain.once('message', (ev, message) => console.log(message))
 
-  ipcMain.on('setTheme', (ev, theme) => {
+  ipcMain.once('setTheme', (ev, theme) => {
     set('theme', theme)
     mainWindow?.reload()
   })
+
+  ipcMain.handle('getFiles', () => fs.readdirSync(path.resolve(app.getPath('desktop'))))
 }
 
 app.on('ready', createWindow)
