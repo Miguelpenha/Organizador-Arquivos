@@ -1,0 +1,13 @@
+{
+    "name": "áudios",
+    "types": [
+        "mp3",
+        "wav",
+        "m4a",
+        "flac",
+        "ogg",
+        "mp2",
+        "amr",
+        "m4r"
+    ]
+}

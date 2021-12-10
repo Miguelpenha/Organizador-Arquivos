@@ -1,0 +1,10 @@
+{
+    "name": "textos",
+    "types": [
+        "docx",
+        "txt",
+        "epub",
+        "odt",
+        "rtf"
+    ]
+}

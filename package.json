@@ -1,7 +1,7 @@
 {
   "name": "organizador-arquivos",
-  "author": "Diego Fernandes <diego.schell.f@gmail.com>",
-  "version": "2.0.0",
+  "author": "Miguel da Penha",
+  "version": "1.0.0",
   "description": "An Electron boilerplate including TypeScript, React, Jest and ESLint.",
   "main": "./.webpack/main/index.js",
   "scripts": {
@@ -13,6 +13,8 @@
   "keywords": [],
   "license": "MIT",
   "dependencies": {
+    "@material-ui/core": "^4.12.3",
+    "@material-ui/icons": "^4.11.2",
     "react": "17.0.2",
     "react-dom": "17.0.2",
     "react-hot-loader": "4.13.0",
@@ -52,7 +54,8 @@
         "icon": "assets/icon",
         "extraResource": [
           "assets",
-          "themes"
+          "themes",
+          "configs"
         ]
       },
       "plugins": [

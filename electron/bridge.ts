@@ -27,7 +27,7 @@ export const api = {
 
       return files
     },
-    organize: async () => ipcRenderer.send('organize')
+    organize: () => ipcRenderer.send('organize')
   }
 }
 

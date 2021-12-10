@@ -1,0 +1,15 @@
+{
+    "name": "dev",
+    "types": [
+        "js",
+        "py",
+        "jsx",
+        "tsx",
+        "html",
+        "ts",
+        "code-workspace",
+        "css",
+        "json",
+        "md"
+    ]
+}

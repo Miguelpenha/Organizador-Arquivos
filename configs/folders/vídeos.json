@@ -1,0 +1,14 @@
+{
+    "name": "vídeos",
+    "types": [
+        "mp4",
+        "avi",
+        "mpg",
+        "mov",
+        "flv",
+        "3gp",
+        "webm",
+        "mkv",
+        "gif"
+    ]
+}

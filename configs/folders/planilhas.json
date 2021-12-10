@@ -1,0 +1,9 @@
+{
+    "name": "planilhas",
+    "types": [
+        "xlsx",
+        "csv",
+        "tsv",
+        "ods"
+    ]
+}
