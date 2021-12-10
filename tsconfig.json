@@ -15,5 +15,15 @@
     "strict": true,
     "esModuleInterop": true,
     "resolveJsonModule": true
-  }
+  },
+  "plugins": [
+    {
+      "name": "typescript-styled-plugin",
+      "tags": [
+        "styled",
+        "css",
+        "sty"
+      ]
+    }
+  ]
 }

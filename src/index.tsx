@@ -1,14 +1,9 @@
 import { render } from 'react-dom'
-import { BrowserRouter } from 'react-router-dom'
-import Index from './pages'
-import { GlobalStyle } from './styles/GlobalStyle'
+import App from './app'
 
 const rootElement = document.getElementById('root')
 
 render(
-  <BrowserRouter>
-    <Index/>
-    <GlobalStyle/>
-  </BrowserRouter>,
+  <App/>,
   rootElement
 )

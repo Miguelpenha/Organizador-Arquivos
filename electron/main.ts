@@ -2,6 +2,7 @@ import { app, BrowserWindow, ipcMain } from 'electron'
 import path from 'path'
 import { get, set } from './store'
 import fs from 'fs'
+import Itheme from './types/theme'
 
 let mainWindow: BrowserWindow | null
 
@@ -11,7 +12,6 @@ declare const MAIN_WINDOW_PRELOAD_WEBPACK_ENTRY: string
 function createWindow() {
   mainWindow = new BrowserWindow({
     icon: process.env.NODE_DEVELOPMENT ? path.resolve(__dirname, '..', '..', 'assets', 'icon.ico') : path.resolve(__dirname, '..', '..', '..', 'assets', 'icon.ico'),
-    backgroundColor: '#191622',
     darkTheme: true,
     resizable: true,
     titleBarStyle: 'customButtonsOnHover',
@@ -39,19 +39,18 @@ function createWindow() {
 declare global {
   namespace NodeJS {
     interface ProcessEnv {
-      USERPROFILE: string
+      USERPROFILE: string,
+      NODE_DEVELOPMENT: 'development' | undefined
     }
   }
 }
 
 function registerListeners() {
-  if (!get('theme')) {
-    set('theme', 'omni')
-  }
+  if (!get('theme')) set('theme', 'omni')
 
-  ipcMain.on('setTheme', (ev, theme: string) => {
-    set('theme', theme)
-    mainWindow?.reload()
+  ipcMain.on('setTheme', (ev, themeName: string) => {
+    set('theme', themeName)
+    // mainWindow?.reload()
   })
 
   ipcMain.handle('getFiles', () => {
@@ -61,25 +60,26 @@ function registerListeners() {
   })
 
   ipcMain.on('organize', async () => {
-    const files: Array<string> = fs.readdirSync(path.resolve(app.getPath('desktop')))
-    const caminhoProd = ['..', '..', '..', 'configs', 'folders']
-    const caminhoDev = ['..', '..', 'configs', 'folders']
-    const caminhoAtual = process.env.NODE_DEVELOPMENT ? caminhoDev : caminhoProd
-    const folders = fs.readdirSync(path.resolve(__dirname, ...caminhoAtual))
-    const filesTypes = folders.map(folder => JSON.parse(fs.readFileSync(path.resolve(__dirname, ...caminhoAtual, folder)).toString()))
+    interface IfileType {
+      name: string,
+      types: Array<string>
+    }
 
     interface IfilesBrutos {
       name: string,
       files: Array<string>
     }
 
-    interface IfileType {
-      name: string,
-      types: Array<string>
-    }
+    const files: Array<string> = fs.readdirSync(path.resolve(app.getPath('desktop')))
+    const caminhoProd = ['..', '..', '..', 'configs', 'folders']
+    const caminhoDev = ['..', '..', 'configs', 'folders']
+    const caminhoAtual = process.env.NODE_DEVELOPMENT ? caminhoDev : caminhoProd
+    const folders: Array<string> = fs.readdirSync(path.resolve(__dirname, ...caminhoAtual))
+    
+    const filesTypes: Array<IfileType> = folders.map(folder => JSON.parse(fs.readFileSync(path.resolve(__dirname, ...caminhoAtual, folder)).toString()))
 
     let filesBruto: Array<IfilesBrutos> = await Promise.all(
-      filesTypes.map(async (fileType: IfileType) => {
+      filesTypes.map(async fileType => {
         const filesSelect = Promise.all(
           files.map((file: string) => {
             const teste1: Array<string | null> = fileType.types.map((type: string) => {

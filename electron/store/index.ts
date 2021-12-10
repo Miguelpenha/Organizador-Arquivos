@@ -1,7 +1,8 @@
 import fs from 'fs'
 import path from 'path'
+import Icontent from '../types/content'
 
-const caminho = path.resolve(process.env.USERPROFILE, 'AppData', 'Roaming', 'organizador-arquivos', 'settings.json')
+const caminho: string = path.resolve(process.env.USERPROFILE, 'AppData', 'Roaming', 'organizador-arquivos', 'settings.json')
 
 export function get(key: string, ignoreDot: boolean=true) {
     createFile()
@@ -21,30 +22,28 @@ export function get(key: string, ignoreDot: boolean=true) {
     }
 }
 
-export function set(key: string, value: string, ignoreDot: boolean=true) {
+export function set(key: string, value: string | object) {
     createFile()
 
     const content = getContent()
 
     content[key] = value
 
-    if (ignoreDot) {
-        fs.writeFileSync(caminho, JSON.stringify(content, null, '   '))
-    } else {
-
-    }
+    fs.writeFileSync(caminho, JSON.stringify(content, null, '   '))
 }
 
 export function getContent() {
     createFile()
 
-    const content = JSON.parse(fs.readFileSync(caminho).toString('utf-8'))
-    
+    const content: Icontent = JSON.parse(fs.readFileSync(caminho).toString('utf-8'))
+
     return content
 }
 
 export function createFile(content: object = {}) {
-    if (!fs.existsSync(caminho)) {
+    const exists: boolean = fs.existsSync(caminho)
+
+    if (!exists) {
         fs.writeFileSync(caminho, JSON.stringify(content, null, '   '))
     }
 }

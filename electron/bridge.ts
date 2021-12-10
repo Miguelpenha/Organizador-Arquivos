@@ -6,18 +6,33 @@ import Itheme from './types/theme'
 
 export const api = {
   theme: {
-    get: () => {
-      const caminhoPD: Array<string> = ['..', '..', '..', 'themes', `${get('theme')}.json`]
-      const caminhoDev: string = path.resolve(__dirname, ...caminhoPD)
-      const caminhoProd: string = path.resolve(__dirname, '..', ...caminhoPD)
+    get: {
+      used: () => {
+        const caminhoPD: Array<string> = ['..', '..', '..', 'configs', 'themes', `${get('theme')}.json`]
+        const caminhoDev: string = path.resolve(__dirname, ...caminhoPD)
+        const caminhoProd: string = path.resolve(__dirname, '..', ...caminhoPD)
+        const caminhoAtual = process.env.NODE_DEVELOPMENT ? caminhoDev : caminhoProd
+        
+        const theme: Itheme = JSON.parse(fs.readFileSync(caminhoAtual).toString('utf-8'))
+  
+        return theme
+      },
+      themes: () => {
+        const caminhoPD: Array<string> = ['..', '..', '..', 'configs', 'themes']
+        const caminhoDev: string = path.resolve(__dirname, ...caminhoPD)
+        const caminhoProd: string = path.resolve(__dirname, '..', ...caminhoPD)
+        const caminhoAtual = process.env.NODE_DEVELOPMENT ? caminhoDev : caminhoProd
+        
+        const themesBrutos: Array<string> = fs.readdirSync(caminhoAtual)
 
-      const theme: Itheme = JSON.parse(
-        fs.readFileSync(
-          process.env.NODE_DEVELOPMENT ? caminhoDev : caminhoProd
-        ).toString('utf-8')
-      )
-
-      return theme
+        const themes: Array<Itheme> = themesBrutos.map(theme => JSON.parse(
+          fs.readFileSync(
+            path.resolve(caminhoAtual, theme)
+          ).toString('utf-8')
+        ))
+        
+        return themes
+      }
     },
     set: (theme: string) => ipcRenderer.send('setTheme', theme),
   },
