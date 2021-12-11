@@ -2,7 +2,7 @@ import fs from 'fs'
 import path from 'path'
 import Icontent from '../types/content'
 
-const caminho: string = path.resolve(process.env.USERPROFILE, 'AppData', 'Roaming', 'organizador-arquivos', 'settings.json')
+const caminho: string = path.resolve(process.env.LOCALAPPDATA, 'Programs', 'Organizador de arquivos', 'resources', 'configs', 'settings.json')
 
 export function get(key: string, ignoreDot: boolean=true) {
     createFile()

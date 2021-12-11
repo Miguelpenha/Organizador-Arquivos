@@ -24,7 +24,7 @@ export default function Index(props: Iprops) {
       <ButtonOrganize variant='contained' onClick={() => {
         window.electron.files.organize()
         handleClick()
-      }}>Organizar</ButtonOrganize>
+      }}>Organizar arquivos</ButtonOrganize>
       <Snackbar open={alertOrganize} anchorOrigin={{
         horizontal: 'right',
         vertical: 'bottom'

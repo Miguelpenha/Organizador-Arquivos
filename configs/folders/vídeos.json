@@ -1,5 +1,6 @@
 {
     "name": "vídeos",
+    "path": "desktop",
     "types": [
         "mp4",
         "avi",

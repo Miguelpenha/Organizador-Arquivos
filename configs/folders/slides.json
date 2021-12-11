@@ -1,5 +1,6 @@
 {
     "name": "slides",
+    "path": "desktop",
     "types": [
         "pptx",
         "odp"

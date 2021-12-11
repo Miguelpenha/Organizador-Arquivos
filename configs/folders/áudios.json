@@ -1,5 +1,6 @@
 {
     "name": "áudios",
+    "path": "desktop",
     "types": [
         "mp3",
         "wav",

@@ -1,4 +1,5 @@
 import { contextBridge, ipcRenderer } from 'electron'
+
 import { get } from './store/index'
 import fs from 'fs'
 import path from 'path'
@@ -43,7 +44,8 @@ const api = {
       return files
     },
     organize: () => ipcRenderer.send('organize')
-  }
+  },
+  openConfigFolder: () => ipcRenderer.send('openConfigFolder')
 }
 
 contextBridge.exposeInMainWorld('electron', api)

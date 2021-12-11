@@ -16,11 +16,17 @@ export const Title = styled.h2`
 
 export const ButtonOrganize = styled(Button)`
   && {
-    width: 10%;
+    width: 14%;
+    padding: 1%;
     font-size: 1vw;
     margin-top: 1%;
     cursor: pointer;
     color: ${props => props.theme.color};
+    background-color: ${props => props.theme.comment};
+  }
+
+  &&:hover {
+    opacity: 0.8;
     background-color: ${props => props.theme.comment};
   }
 `

@@ -1,5 +1,6 @@
 {
     "name": "dev",
+    "path": "desktop",
     "types": [
         "js",
         "py",

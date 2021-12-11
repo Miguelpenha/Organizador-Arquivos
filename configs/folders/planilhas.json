@@ -1,5 +1,6 @@
 {
     "name": "planilhas",
+    "path": "desktop",
     "types": [
         "xlsx",
         "csv",

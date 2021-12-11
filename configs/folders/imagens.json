@@ -1,5 +1,6 @@
 {
     "name": "imagens",
+    "path": "desktop",
     "types": [
         "jpg",
         "png",

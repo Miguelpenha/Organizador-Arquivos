@@ -1,8 +1,7 @@
-import { app, BrowserWindow, ipcMain } from 'electron'
+import { app, BrowserWindow, ipcMain, shell } from 'electron'
 import path from 'path'
 import { get, set } from './store'
 import fs from 'fs'
-import Itheme from './types/theme'
 
 let mainWindow: BrowserWindow | null
 
@@ -40,18 +39,15 @@ declare global {
   namespace NodeJS {
     interface ProcessEnv {
       USERPROFILE: string,
-      NODE_DEVELOPMENT: 'development' | undefined
+      NODE_DEVELOPMENT: 'development' | undefined,
+      LOCALAPPDATA: string
     }
   }
 }
 
 function registerListeners() {
   if (!get('theme')) set('theme', 'omni')
-
-  ipcMain.on('setTheme', (ev, themeName: string) => {
-    set('theme', themeName)
-    // mainWindow?.reload()
-  })
+  ipcMain.on('setTheme', (ev, themeName: string) => set('theme', themeName))
 
   ipcMain.handle('getFiles', () => {
     const files: Array<string> = fs.readdirSync(path.resolve(app.getPath('desktop')))
@@ -62,14 +58,16 @@ function registerListeners() {
   ipcMain.on('organize', async () => {
     interface IfileType {
       name: string,
+      path: string,
       types: Array<string>
     }
 
     interface IfilesBrutos {
       name: string,
+      path: string,
       files: Array<string>
     }
-
+    
     const files: Array<string> = fs.readdirSync(path.resolve(app.getPath('desktop')))
     const caminhoProd = ['..', '..', '..', 'configs', 'folders']
     const caminhoDev = ['..', '..', 'configs', 'folders']
@@ -100,17 +98,20 @@ function registerListeners() {
 
         const testeasd123: Array<string> = testeasd.map(value => String(value))
 
-        return {
+        const resu: IfilesBrutos = {
           name: fileType.name,
+          path: fileType.path === 'desktop' ? app.getPath('desktop') : fileType.path,
           files: testeasd123
         }
+
+        return resu
       })
     )
 
     filesBruto.map(fileBruto => {
       if (fileBruto.files.length > 0) {
         try {
-          fs.mkdirSync(path.resolve(app.getPath('desktop'), fileBruto.name))
+          fs.mkdirSync(path.resolve(fileBruto.path, fileBruto.name))
         } catch {
 
         }
@@ -118,13 +119,15 @@ function registerListeners() {
 
       fileBruto.files.map(file => {
         try {
-          fs.renameSync(path.resolve(app.getPath('desktop'), file), path.resolve(app.getPath('desktop'), fileBruto.name, file))
+          fs.renameSync(path.resolve(app.getPath('desktop'), file), path.resolve(fileBruto.path, fileBruto.name, file))
         } catch {
           
         }
       })
     })
   })
+
+  ipcMain.on('openConfigFolder', () => shell.openPath(path.resolve(process.env.LOCALAPPDATA, 'Programs', 'Organizador de arquivos', 'resources', 'configs')))
 }
 
 app.on('ready', createWindow)

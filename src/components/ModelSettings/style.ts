@@ -1,5 +1,5 @@
 import styled from 'styled-components'
-import { Dialog as DialogMUI, Select } from '@material-ui/core'
+import { Dialog as DialogMUI, Select, Button } from '@material-ui/core'
 
 export const Dialog = styled(DialogMUI)`
   && {
@@ -10,10 +10,11 @@ export const Dialog = styled(DialogMUI)`
 export const Container = styled.div`
   width: 100%;
   height: 100%;
-  background-color: ${props => props.theme.comment};
   display: flex;
-  justify-content: center;
   padding-bottom: 20%;
+  flex-direction: column;
+  align-items: center;
+  background-color: ${props => props.theme.comment};
 `
 
 export const SelectThemes = styled(Select)`
@@ -21,7 +22,7 @@ export const SelectThemes = styled(Select)`
     width: 20%;
     margin-top: 5%;
     font-size: 2vw;
-    padding-left: 1%;
+    padding-left: 2%;
     border-radius: 8px;
     color: ${props => props.theme.color};
     background-color: ${props => props.theme.backgroundColor};
@@ -29,5 +30,20 @@ export const SelectThemes = styled(Select)`
 
   & .MuiSelect-icon {
     color: ${props => props.theme.color};
+  }
+`
+
+export const ButtonOpenConfigFolder = styled(Button)`
+  && {
+    width: 29%;
+    padding: 2%;
+    margin-top: 5%;
+    color: ${props => props.theme.color};
+    background-color: ${props => props.theme.backgroundColor};
+  }
+
+  &&:hover {
+    opacity: 0.8;
+    background-color: ${props => props.theme.backgroundColor};
   }
 `
