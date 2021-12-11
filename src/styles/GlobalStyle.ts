@@ -12,9 +12,13 @@ const GlobalStyle = createGlobalStyle`
   }
 
   body {
-    font-family: Arial, Helvetica, sans-serif;
     font-size: 16px;
+    font-family: Arial, Helvetica, sans-serif;
     background-color: ${props => props.theme.backgroundColor};
+  }
+
+  & ul.MuiList-root.MuiMenu-list.MuiList-padding {
+    background-color: ${props => props.theme.currentLine}
   }
 `
 

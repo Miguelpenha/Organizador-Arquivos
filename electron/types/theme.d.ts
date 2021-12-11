@@ -1,17 +1,15 @@
-interface Itheme {
+export default interface Itheme {
     name: string,
     backgroundColor: string,
-    CurrentLine: string,
-    Selection: string,
+    currentLine: string,
+    selection: string,
     color: string,
     comment: string,
-    Cyan: string,
-    Green: string,
-    Orange: string,
-    Pink: string,
-    Purple: string,
-    Red: string,
-    Yellow: string
+    cyan: string,
+    green: string,
+    orange: string,
+    pink: string,
+    purple: string,
+    red: string,
+    yellow: string
 }
-
-export default Itheme

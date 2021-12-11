@@ -1,12 +1,12 @@
 import { useState } from 'react'
+import themeDefault from './theme'
+import Itheme from '../electron/types/theme'
+import { ThemeProvider } from 'styled-components'
 import { BrowserRouter } from 'react-router-dom'
 import Index from './pages'
 import GlobalStyle from './styles/GlobalStyle'
-import { ThemeProvider } from 'styled-components'
-import themeDefault from './theme'
-import Itheme from '../electron/types/theme'
 
-function App() {
+export default function App() {
     const [theme, setTheme] = useState(themeDefault)
 
     function mutateTheme(themeName: string) {
@@ -25,5 +25,3 @@ function App() {
         </ThemeProvider>
     )
 }
-
-export default App

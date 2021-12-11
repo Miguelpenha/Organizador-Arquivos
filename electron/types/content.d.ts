@@ -1,6 +1,4 @@
-interface Icontent {
+export default interface Icontent {
     [key: string]: any,
     theme: string
 }
-
-export default Icontent

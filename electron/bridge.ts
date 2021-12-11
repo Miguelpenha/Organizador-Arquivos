@@ -4,7 +4,7 @@ import fs from 'fs'
 import path from 'path'
 import Itheme from './types/theme'
 
-export const api = {
+const api = {
   theme: {
     get: {
       used: () => {
@@ -47,3 +47,5 @@ export const api = {
 }
 
 contextBridge.exposeInMainWorld('electron', api)
+
+export default api

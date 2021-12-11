@@ -1,5 +1,7 @@
 import styled from 'styled-components'
-import { Button, Select } from '@material-ui/core'
+import { Button } from '@material-ui/core'
+import { Alert as AlerMUI } from '@material-ui/lab'
+
 
 export const Container = styled.div`
   display: flex;
@@ -14,23 +16,19 @@ export const Title = styled.h2`
 
 export const ButtonOrganize = styled(Button)`
   && {
-    background-color: #ffffff;
-    color: #000000;
     width: 10%;
     font-size: 1vw;
-    cursor: pointer;
     margin-top: 1%;
+    cursor: pointer;
+    color: ${props => props.theme.color};
+    background-color: ${props => props.theme.comment};
   }
 `
 
-export const SelectThemes = styled(Select)`
+export const Alert = styled(AlerMUI)`
   && {
-    background-color: ${props => props.theme.comment};
-    margin-top: 2%;
-    border-radius: 8px;
-    font-size: 2vw;
-    color: ${props => props.theme.color};
-    padding-left: 1%;
-    width: 20%;
+    width: 100%;
+    color: #4caf50;
+    font-size: 1.2vw;
   }
 `
