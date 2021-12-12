@@ -10,7 +10,7 @@ declare const MAIN_WINDOW_PRELOAD_WEBPACK_ENTRY: string
 
 function createWindow() {
   mainWindow = new BrowserWindow({
-    icon: process.env.NODE_DEVELOPMENT ? path.resolve(__dirname, '..', '..', 'assets', 'icon.ico') : path.resolve(__dirname, '..', '..', '..', 'assets', 'icon.ico'),
+    icon: process.env.NODE_DEVELOPMENT ? path.resolve(__dirname.split('\.webpack')[0], 'assets', 'icon.ico') : path.resolve(__dirname.split('\app')[0], 'assets', 'icon.ico'),
     darkTheme: true,
     resizable: true,
     titleBarStyle: 'customButtonsOnHover',
@@ -69,12 +69,12 @@ function registerListeners() {
     }
     
     const files: Array<string> = fs.readdirSync(path.resolve(app.getPath('desktop')))
-    const caminhoProd = ['..', '..', '..', 'configs', 'folders']
-    const caminhoDev = ['..', '..', 'configs', 'folders']
+    const caminhoProd = [__dirname.split('\app')[0], 'configs', 'folders']
+    const caminhoDev = [__dirname.split('\.webpack')[0], 'configs', 'folders']
     const caminhoAtual = process.env.NODE_DEVELOPMENT ? caminhoDev : caminhoProd
-    const folders: Array<string> = fs.readdirSync(path.resolve(__dirname, ...caminhoAtual))
-    
-    const filesTypes: Array<IfileType> = folders.map(folder => JSON.parse(fs.readFileSync(path.resolve(__dirname, ...caminhoAtual, folder)).toString()))
+    const folders: Array<string> = fs.readdirSync(path.resolve(...caminhoAtual))
+  
+    const filesTypes: Array<IfileType> = folders.map(folder => JSON.parse(fs.readFileSync(path.resolve(...caminhoAtual, folder)).toString()))
 
     let filesBruto: Array<IfilesBrutos> = await Promise.all(
       filesTypes.map(async fileType => {
@@ -127,7 +127,13 @@ function registerListeners() {
     })
   })
 
-  ipcMain.on('openConfigFolder', () => shell.openPath(path.resolve(process.env.LOCALAPPDATA, 'Programs', 'Organizador de arquivos', 'resources', 'configs')))
+  ipcMain.on('openConfigFolder', () => {
+    if (process.env.NODE_DEVELOPMENT) {
+      shell.openPath(path.resolve(__dirname.split('\.webpack')[0], 'configs'))
+    } else {
+      shell.openPath(path.resolve(__dirname.split('\app')[0], 'configs'))
+    }
+  })
 }
 
 app.on('ready', createWindow)

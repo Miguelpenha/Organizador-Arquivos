@@ -9,9 +9,9 @@ const api = {
   theme: {
     get: {
       used: () => {
-        const caminhoPD: Array<string> = ['..', '..', '..', 'configs', 'themes', `${get('theme')}.json`]
-        const caminhoDev: string = path.resolve(__dirname, ...caminhoPD)
-        const caminhoProd: string = path.resolve(__dirname, '..', ...caminhoPD)
+        const caminhoPD: Array<string> = ['configs', 'themes', `${get('theme')}.json`]
+        const caminhoDev: string = path.resolve(__dirname.split('\.webpack')[0], ...caminhoPD)
+        const caminhoProd: string = path.resolve(__dirname.split('\app')[0], ...caminhoPD)
         const caminhoAtual = process.env.NODE_DEVELOPMENT ? caminhoDev : caminhoProd
         
         const theme: Itheme = JSON.parse(fs.readFileSync(caminhoAtual).toString('utf-8'))
@@ -19,9 +19,9 @@ const api = {
         return theme
       },
       themes: () => {
-        const caminhoPD: Array<string> = ['..', '..', '..', 'configs', 'themes']
-        const caminhoDev: string = path.resolve(__dirname, ...caminhoPD)
-        const caminhoProd: string = path.resolve(__dirname, '..', ...caminhoPD)
+        const caminhoPD: Array<string> = ['configs', 'themes']
+        const caminhoDev: string = path.resolve(__dirname.split('\.webpack')[0], ...caminhoPD)
+        const caminhoProd: string = path.resolve(__dirname.split('\app')[0], ...caminhoPD)
         const caminhoAtual = process.env.NODE_DEVELOPMENT ? caminhoDev : caminhoProd
         
         const themesBrutos: Array<string> = fs.readdirSync(caminhoAtual)

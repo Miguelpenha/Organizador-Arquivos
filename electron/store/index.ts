@@ -2,7 +2,7 @@ import fs from 'fs'
 import path from 'path'
 import Icontent from '../types/content'
 
-const caminho: string = path.resolve(process.env.LOCALAPPDATA, 'Programs', 'Organizador de arquivos', 'resources', 'configs', 'settings.json')
+const caminho: string = process.env.NODE_DEVELOPMENT ? path.resolve(__dirname.split('\.webpack')[0], 'configs', 'settings.json') : path.resolve(__dirname.split('\app')[0], 'configs', 'settings.json')
 
 export function get(key: string, ignoreDot: boolean=true) {
     createFile()
