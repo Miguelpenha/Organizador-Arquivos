@@ -33,6 +33,37 @@ export const SelectThemes = styled(Select)`
   }
 `
 
+export const SelectConfigs = styled(Select)`
+  && {
+    width: 30%;
+    margin-top: 5%;
+    font-size: 2vw;
+    padding-left: 2%;
+    border-radius: 8px;
+    color: ${props => props.theme.color};
+    background-color: ${props => props.theme.backgroundColor};
+  }
+
+  & .MuiSelect-icon {
+    color: ${props => props.theme.color};
+  }
+`
+
+export const ButtonSelectPathConfig = styled(Button)`
+  && {
+    width: 35%;
+    padding: 5%;
+    margin-top: 5%;
+    color: ${props => props.theme.color};
+    background-color: ${props => props.theme.backgroundColor};
+  }
+
+  &&:hover {
+    opacity: 0.8;
+    background-color: ${props => props.theme.backgroundColor};
+  }
+`
+
 export const ButtonOpenConfigFolder = styled(Button)`
   && {
     width: 29%;

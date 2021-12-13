@@ -1,7 +1,8 @@
-import { app, BrowserWindow, ipcMain, shell } from 'electron'
+import { app, BrowserWindow, ipcMain, shell, dialog } from 'electron'
 import path from 'path'
 import { get, set } from './store'
 import fs from 'fs'
+import Itheme from './types/theme'
 
 let mainWindow: BrowserWindow | null
 
@@ -9,12 +10,20 @@ declare const MAIN_WINDOW_WEBPACK_ENTRY: string
 declare const MAIN_WINDOW_PRELOAD_WEBPACK_ENTRY: string
 
 function createWindow() {
+  const caminhoPD: Array<string> = ['configs', 'themes', `${get('theme')}.json`]
+  const caminhoDev: string = path.resolve(__dirname.split('\.webpack')[0], ...caminhoPD)
+  const caminhoProd: string = path.resolve(__dirname.split('\app')[0], ...caminhoPD)
+  const caminhoAtual = process.env.NODE_DEVELOPMENT ? caminhoDev : caminhoProd
+  
+  const theme: Itheme = JSON.parse(fs.readFileSync(caminhoAtual).toString('utf-8'))
+
   mainWindow = new BrowserWindow({
     icon: process.env.NODE_DEVELOPMENT ? path.resolve(__dirname.split('\.webpack')[0], 'assets', 'icon.ico') : path.resolve(__dirname.split('\app')[0], 'assets', 'icon.ico'),
     darkTheme: true,
     resizable: true,
     titleBarStyle: 'customButtonsOnHover',
     movable: true,
+    backgroundColor: theme.backgroundColor,
     title: 'Organizador de arquivos',
     closable: true,
     center: true,
@@ -134,13 +143,21 @@ function registerListeners() {
       shell.openPath(path.resolve(__dirname.split('\app')[0], 'configs'))
     }
   })
+
+  ipcMain.handle('opendialogConfigFiles', () => {
+    const path = dialog.showOpenDialogSync({properties: ['openDirectory']})
+
+    return path
+  })
 }
 
-app.on('ready', createWindow)
-  .whenReady()
-  .then(registerListeners)
+app.whenReady()
+  .then(() => {
+    createWindow()
+    registerListeners()
+
+    app.on('activate', () => BrowserWindow.getAllWindows().length === 0 && createWindow())
+  })
   .catch(error => console.error(error))
   
 app.on('window-all-closed', () => process.platform !== 'darwin' && app.quit())
-
-app.on('activate', () => BrowserWindow.getAllWindows().length === 0 && createWindow())

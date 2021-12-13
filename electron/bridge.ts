@@ -1,4 +1,4 @@
-import { contextBridge, ipcRenderer } from 'electron'
+import { contextBridge, ipcRenderer, dialog } from 'electron'
 
 import { get } from './store/index'
 import fs from 'fs'
@@ -44,6 +44,34 @@ const api = {
       return files
     },
     organize: () => ipcRenderer.send('organize')
+  },
+  configsFiles: {
+    get: () => {
+      const caminhoPD: Array<string> = ['configs', 'folders']
+      const caminhoDev: string = path.resolve(__dirname.split('\.webpack')[0], ...caminhoPD)
+      const caminhoProd: string = path.resolve(__dirname.split('\app')[0], ...caminhoPD)
+      const caminhoAtual = process.env.NODE_DEVELOPMENT ? caminhoDev : caminhoProd
+
+      interface Iconfig {
+        name: string,
+        path: string,
+        types: Array<string>
+      }
+
+      const configs: Array<Iconfig> = []
+
+      fs.readdirSync(caminhoAtual).map(config => {
+        const caminhoPDConfig: Array<string> = ['configs', 'folders', config]
+        const caminhoDevConfig: string = path.resolve(__dirname.split('\.webpack')[0], ...caminhoPDConfig)
+        const caminhoProdConfig: string = path.resolve(__dirname.split('\app')[0], ...caminhoPDConfig)
+        const caminhoAtualConfig = process.env.NODE_DEVELOPMENT ? caminhoDevConfig : caminhoProdConfig
+
+        configs.push(JSON.parse(fs.readFileSync(caminhoAtualConfig).toString('utf-8')))
+      })
+
+      return configs
+    },
+    openDialog: async () => await ipcRenderer.invoke('opendialogConfigFiles')
   },
   openConfigFolder: () => ipcRenderer.send('openConfigFolder')
 }
