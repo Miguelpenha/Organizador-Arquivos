@@ -144,10 +144,20 @@ function registerListeners() {
     }
   })
 
-  ipcMain.handle('opendialogConfigFiles', () => {
-    const path = dialog.showOpenDialogSync({properties: ['openDirectory']})
+  ipcMain.handle('opendialogConfigFiles', async () => {
+    let pathBruto = await dialog.showOpenDialog({properties: ['openDirectory']})
 
-    return path
+    if (pathBruto.canceled) {
+      return undefined 
+    } else {
+      const path = pathBruto.filePaths[0]
+      
+      if (path === app.getPath('desktop')) {
+        return 'desktop'
+      } else {
+        return path
+      }
+    }
   })
 }
 

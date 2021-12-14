@@ -1,8 +1,8 @@
 {
-    "name": "compactados",
-    "path": "desktop",
-    "types": [
-        "zip",
-        "rar"
-    ]
+   "name": "compactados",
+   "path": "desktop",
+   "types": [
+      "zip",
+      "rar"
+   ]
 }

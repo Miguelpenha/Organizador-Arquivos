@@ -51,9 +51,9 @@ export const SelectConfigs = styled(Select)`
 
 export const ButtonSelectPathConfig = styled(Button)`
   && {
-    width: 35%;
+    width: fit-content;
     padding: 5%;
-    margin-top: 5%;
+    margin-top: 10%;
     color: ${props => props.theme.color};
     background-color: ${props => props.theme.backgroundColor};
   }

@@ -71,7 +71,43 @@ const api = {
 
       return configs
     },
-    openDialog: async () => await ipcRenderer.invoke('opendialogConfigFiles')
+    openDialog: async () => await ipcRenderer.invoke('opendialogConfigFiles'),
+    set: (name: string, pathBruto: string) => {
+      const caminhoPD: Array<string> = ['configs', 'folders']
+      const caminhoDev: string = path.resolve(__dirname.split('\.webpack')[0], ...caminhoPD)
+      const caminhoProd: string = path.resolve(__dirname.split('\app')[0], ...caminhoPD)
+      const caminhoAtual = process.env.NODE_DEVELOPMENT ? caminhoDev : caminhoProd
+
+      interface Iconfig {
+        name: string,
+        path: string,
+        types: Array<string>
+      }
+
+      const configs: Array<Iconfig> = []
+
+      fs.readdirSync(caminhoAtual).map(config => {
+        const caminhoPDConfig: Array<string> = ['configs', 'folders', config]
+        const caminhoDevConfig: string = path.resolve(__dirname.split('\.webpack')[0], ...caminhoPDConfig)
+        const caminhoProdConfig: string = path.resolve(__dirname.split('\app')[0], ...caminhoPDConfig)
+        const caminhoAtualConfig = process.env.NODE_DEVELOPMENT ? caminhoDevConfig : caminhoProdConfig
+
+        configs.push(JSON.parse(fs.readFileSync(caminhoAtualConfig).toString('utf-8')))
+      })
+
+      configs.map(config => {
+        if (config.name === name) {
+          const caminhoPDConfig: Array<string> = ['configs', 'folders', `${config.name}.json`]
+          const caminhoDevConfig: string = path.resolve(__dirname.split('\.webpack')[0], ...caminhoPDConfig)
+          const caminhoProdConfig: string = path.resolve(__dirname.split('\app')[0], ...caminhoPDConfig)
+          const caminhoAtualConfig = process.env.NODE_DEVELOPMENT ? caminhoDevConfig : caminhoProdConfig
+
+          config.path = pathBruto
+
+          fs.writeFileSync(caminhoAtualConfig, JSON.stringify(config, null, '   '))
+        }
+      })
+    },
   },
   openConfigFolder: () => ipcRenderer.send('openConfigFolder')
 }
