@@ -1,7 +1,7 @@
 {
   "name": "organizador-arquivos",
   "author": "Miguel da Penha",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "Organizador de arquivos",
   "main": "./.webpack/main/index.js",
   "scripts": {
