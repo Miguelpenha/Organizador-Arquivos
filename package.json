@@ -50,9 +50,9 @@
   "config": {
     "forge": {
       "packagerConfig": {
-        "name": "organizador-arquivos",
-        "executableName": "organizador-arquivos",
-        "icon": "assets/icon",
+        "name": "organizador de arquivos",
+        "executableName": "organizador de arquivos",
+        "icon": "assets/icon.ico",
         "extraResource": [
           "assets",
           "configs"
@@ -83,7 +83,14 @@
         {
           "name": "@electron-forge/maker-squirrel",
           "config": {
-            "name": "organizador-arquivos"
+            "name": "Organizador de arquivos",
+            "authors": "Miguel da Penha",
+            "description": "Um organizador de arquivos",
+            "exe": "Organizador de arquivos",
+            "remoteReleases": "https://github.com/Miguelpenha/Organizador-Arquivos/releases",
+            "setupExe": "Organizador de arquivos",
+            "setupIcon": "./assets/icon.ico",
+            "title": "Organizador de arquivos"
           }
         },
         {
