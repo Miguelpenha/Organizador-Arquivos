@@ -10,7 +10,7 @@ declare const MAIN_WINDOW_WEBPACK_ENTRY: string
 declare const MAIN_WINDOW_PRELOAD_WEBPACK_ENTRY: string
 
 function createWindow() {
-  const caminhoPD: Array<string> = ['configs', 'themes', `${get('theme')}.json`]
+  const caminhoPD: string[] = ['configs', 'themes', `${get('theme')}.json`]
   const caminhoDev: string = path.resolve(__dirname.split('\.webpack')[0], ...caminhoPD)
   const caminhoProd: string = path.resolve(__dirname.split('\app')[0], ...caminhoPD)
   const caminhoAtual = process.env.NODE_DEVELOPMENT ? caminhoDev : caminhoProd
@@ -47,8 +47,8 @@ function createWindow() {
 declare global {
   namespace NodeJS {
     interface ProcessEnv {
-      USERPROFILE: string,
-      NODE_DEVELOPMENT: 'development' | undefined,
+      USERPROFILE: string
+      NODE_DEVELOPMENT: 'development' | undefined
       LOCALAPPDATA: string
     }
   }
@@ -59,33 +59,33 @@ function registerListeners() {
   ipcMain.on('setTheme', (ev, themeName: string) => set('theme', themeName))
 
   ipcMain.handle('getFiles', () => {
-    const files: Array<string> = fs.readdirSync(path.resolve(app.getPath('desktop')))
+    const files: string[] = fs.readdirSync(path.resolve(app.getPath('desktop')))
 
     return files
   })
 
   ipcMain.on('organize', async () => {
     interface IfileType {
-      name: string,
-      path: string,
-      types: Array<string>
+      name: string
+      path: string
+      types: string[]
     }
 
     interface IfilesBrutos {
-      name: string,
-      path: string,
-      files: Array<string>
+      name: string
+      path: string
+      files: string[]
     }
     
-    const files: Array<string> = fs.readdirSync(path.resolve(app.getPath('desktop')))
+    const files: string[] = fs.readdirSync(path.resolve(app.getPath('desktop')))
     const caminhoProd = [__dirname.split('\app')[0], 'configs', 'folders']
     const caminhoDev = [__dirname.split('\.webpack')[0], 'configs', 'folders']
     const caminhoAtual = process.env.NODE_DEVELOPMENT ? caminhoDev : caminhoProd
-    const folders: Array<string> = fs.readdirSync(path.resolve(...caminhoAtual))
+    const folders: string[] = fs.readdirSync(path.resolve(...caminhoAtual))
   
-    const filesTypes: Array<IfileType> = folders.map(folder => JSON.parse(fs.readFileSync(path.resolve(...caminhoAtual, folder)).toString()))
+    const filesTypes: IfileType[] = folders.map(folder => JSON.parse(fs.readFileSync(path.resolve(...caminhoAtual, folder)).toString()))
 
-    let filesBruto: Array<IfilesBrutos> = await Promise.all(
+    let filesBruto: IfilesBrutos[] = await Promise.all(
       filesTypes.map(async fileType => {
         const filesSelect = Promise.all(
           files.map((file: string) => {
@@ -105,7 +105,7 @@ function registerListeners() {
 
         const testeasd: Array<string | null> = (await filesSelect).filter(el => el != undefined)
 
-        const testeasd123: Array<string> = testeasd.map(value => String(value))
+        const testeasd123: string[] = testeasd.map(value => String(value))
 
         const resu: IfilesBrutos = {
           name: fileType.name,
@@ -148,7 +148,7 @@ function registerListeners() {
     let pathBruto = await dialog.showOpenDialog({properties: ['openDirectory']})
 
     if (pathBruto.canceled) {
-      return undefined 
+      return undefined
     } else {
       const path = pathBruto.filePaths[0]
       

@@ -1,37 +1,57 @@
 import Itheme from '../../electron/types/theme'
-import { useState } from 'react'
+import { FC, useState } from 'react'
 import { Container, Title, ButtonOrganize, Alert } from '../styles/pages'
 import { Snackbar } from '@material-ui/core'
 import Settings from '../components/Settings'
 
 interface Iprops {
-  themes: Array<Itheme>,
-  themeUsed: string,
+  themes: Itheme[]
+  themeUsed: string
   mutateTheme: Function
 }
 
-export default function Index(props: Iprops) {
-  const { mutateTheme, themeUsed, themes } = props
+const Index: FC<Iprops> = ({ mutateTheme, themeUsed, themes }) => {
   const [alertOrganize, setAlertOrganize] = useState(false)
-
-  const handleClick = () => setAlertOrganize(true)
-
+  const handleClick = () => {
+    window.electron.files.organize()
+    setAlertOrganize(true)
+  }
   const handleClose = () => setAlertOrganize(false)
   
   return (
     <Container>
-      <Title>Organizador de arquivos</Title>
-      <ButtonOrganize variant='contained' onClick={() => {
-        window.electron.files.organize()
-        handleClick()
-      }}>Organizar arquivos</ButtonOrganize>
-      <Snackbar open={alertOrganize} anchorOrigin={{
-        horizontal: 'right',
-        vertical: 'bottom'
-      }} autoHideDuration={3000} onClose={handleClose}>
-        <Alert onClose={handleClose} severity="success" variant="outlined">Área de trabalho organizada com sucesso</Alert>
+      <Title>Organizador De Arquivos</Title>
+      <ButtonOrganize
+        variant='contained'
+        title="Organizar arquivos"
+        onClick={() => handleClick()}
+      >
+        Organizar arquivos
+      </ButtonOrganize>
+      <Snackbar
+        open={alertOrganize}
+        onClose={handleClose}
+        autoHideDuration={3000}
+        anchorOrigin={{
+          horizontal: 'right',
+          vertical: 'bottom'
+        }}
+      >
+        <Alert
+          variant="outlined"
+          severity="success"
+          onClose={handleClose}
+        >
+          Área de trabalho organizada com sucesso
+        </Alert>
       </Snackbar>
-      <Settings mutateTheme={mutateTheme} themeUsed={themeUsed} themes={themes}/>
+      <Settings
+        themes={themes}
+        themeUsed={themeUsed}
+        mutateTheme={mutateTheme}
+      />
     </Container>
   )
 }
+
+export default Index

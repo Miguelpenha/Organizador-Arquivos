@@ -1,51 +1,59 @@
 import Itheme from '../../../electron/types/theme'
-import { Dialog, Container, SelectThemes, SelectConfigs, ButtonSelectPathConfig, ButtonOpenConfigFolder } from './style'
+import { FC, useState } from 'react'
+import {
+  Dialog,
+  Container,
+  SelectThemes,
+  SelectConfigs,
+  ButtonSelectPathConfig,
+  ButtonOpenConfigFolder
+} from './style'
 import { MenuItem } from '@material-ui/core'
-import { useState } from 'react'
 
 interface Iprops {
-  open: boolean,
-  onClose: Function,
-  themes: Array<Itheme>,
-  themeUsed: string,
+  open: boolean
+  onClose: Function
+  themes: Itheme[]
+  themeUsed: string
   mutateTheme: Function
 }
 
 interface Iconfig {
-  name: string,
-  path: string,
-  types: Array<string>
+  name: string
+  path: string
+  types: string[]
 }
 
-export default function ModelSettings(props: Iprops) {
-  const { open, onClose, mutateTheme, themeUsed, themes } = props
+const ModelSettings: FC<Iprops> = ({ open, onClose, mutateTheme, themeUsed, themes }) => {
   const [configsFiles, setConfigsFiles] = useState(window.electron.configsFiles.get())
   const [configSelect, setConfigSelect] = useState(configsFiles[0].name)
-  
   const handleClose = () => onClose()
 
   interface IPropsConfig {
-    nameConfig: string,
-    configs: Array<Iconfig>
+    nameConfig: string
+    configs: Iconfig[]
   }
 
-  function SelectPath(props: IPropsConfig) {
-    const { configs, nameConfig } = props
-
+  const SelectPath: FC<IPropsConfig> = ({ configs, nameConfig }) => {
     return (
       <>
         {configs.map((config, index) => {
           if (config.name === nameConfig) {
             return (
               <div style={{color: '#fff'}} key={index}>
-                <ButtonSelectPathConfig onClick={async () => {
-                  let path: string | undefined = await window.electron.configsFiles.openDialog()
-                  
-                  if (path) {
-                    window.electron.configsFiles.set(config.name, path)
-                    setConfigsFiles(window.electron.configsFiles.get())
-                  }
-                }}>{config.path}</ButtonSelectPathConfig>
+                <ButtonSelectPathConfig
+                  title="Editar configuração"
+                  onClick={async () => {
+                    let path: string | undefined = await window.electron.configsFiles.openDialog()
+                    
+                    if (path) {
+                      window.electron.configsFiles.set(config.name, path)
+                      setConfigsFiles(window.electron.configsFiles.get())
+                    }
+                  }}
+                >
+                  {config.path}
+                </ButtonSelectPathConfig>
               </div>
             )
           }
@@ -55,17 +63,52 @@ export default function ModelSettings(props: Iprops) {
   }
   
   return (
-    <Dialog fullWidth={true} scroll="paper" maxWidth="md" onClose={handleClose} open={open}>
+    <Dialog
+      open={open}
+      maxWidth="md"
+      scroll="paper"
+      fullWidth={true}
+      onClose={handleClose}
+    >
       <Container>
-        <SelectConfigs value={configSelect} onChange={ev => setConfigSelect(String(ev.target.value))}>
-          {configsFiles.map((config, index) => <MenuItem value={config.name} key={index} style={{color: '#ffffff'}}>{config.name} ({config.path})</MenuItem>)}
+        <SelectConfigs
+          title="Editar configurações"
+          value={configSelect}
+          onChange={ev => (
+            setConfigSelect(String(ev.target.value))
+          )}
+        >
+          {configsFiles.map((config, index) => (
+            <MenuItem
+              key={index}
+              value={config.name}
+              style={{color: '#ffffff'}}
+            >
+              {config.name} ({config.path})
+            </MenuItem>
+          ))}
         </SelectConfigs>
         <SelectPath configs={configsFiles} nameConfig={configSelect}/>
-        <SelectThemes value={themeUsed} onChange={ev => mutateTheme(ev.target.value)}>
-          {themes.map((theme, index) => <MenuItem style={{backgroundColor: theme.backgroundColor, color: theme.color}} value={theme.name} key={index}>{theme.name}</MenuItem>)}
+        <SelectThemes title="Selecionar tema" value={themeUsed} onChange={ev => mutateTheme(ev.target.value)}>
+          {themes.map((theme, index) => (
+            <MenuItem
+              key={index}
+              value={theme.name}
+              style={{backgroundColor: theme.backgroundColor, color: theme.color}}
+            >
+              {theme.name}
+            </MenuItem>
+          ))}
         </SelectThemes>
-        <ButtonOpenConfigFolder onClick={window.electron.openConfigFolder}>Abrir pasta de configuração</ButtonOpenConfigFolder>
+        <ButtonOpenConfigFolder
+          title="Abrir pasta de configuração"
+          onClick={window.electron.openConfigFolder}
+        >
+          Abrir pasta de configuração
+        </ButtonOpenConfigFolder>
       </Container>
     </Dialog>
   )
 }
+
+export default ModelSettings

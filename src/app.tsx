@@ -19,7 +19,11 @@ export default function App() {
     return (
         <ThemeProvider theme={theme}>
             <BrowserRouter>
-                <Index themes={window.electron.theme.get.themes()} themeUsed={theme.name} mutateTheme={mutateTheme}/>
+                <Index
+                    themeUsed={theme.name}
+                    mutateTheme={mutateTheme}
+                    themes={window.electron.theme.get.themes()}
+                />
                 <GlobalStyle/>
             </BrowserRouter>
         </ThemeProvider>

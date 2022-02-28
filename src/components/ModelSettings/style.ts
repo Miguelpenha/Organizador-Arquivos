@@ -12,8 +12,8 @@ export const Container = styled.div`
   height: 100%;
   display: flex;
   padding-bottom: 20%;
-  flex-direction: column;
   align-items: center;
+  flex-direction: column;
   background-color: ${props => props.theme.comment};
 `
 
@@ -51,9 +51,9 @@ export const SelectConfigs = styled(Select)`
 
 export const ButtonSelectPathConfig = styled(Button)`
   && {
-    width: fit-content;
     padding: 5%;
     margin-top: 10%;
+    width: fit-content;
     color: ${props => props.theme.color};
     background-color: ${props => props.theme.backgroundColor};
   }

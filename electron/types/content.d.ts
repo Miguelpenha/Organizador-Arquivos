@@ -1,4 +1,4 @@
 export default interface Icontent {
-    [key: string]: any,
+    [key: string]: any
     theme: string
 }

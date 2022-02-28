@@ -1,21 +1,18 @@
 import Itheme from '../../../electron/types/theme'
-import { useState } from 'react'
+import { FC, useState } from 'react'
 import { Tooltip } from '@material-ui/core'
 import { ButtonSettings, IconSettings } from './style'
 import ModelSettings from '../ModelSettings'
 
 interface Iprops {
-  themes: Array<Itheme>,
-  themeUsed: string,
+  themes: Itheme[]
+  themeUsed: string
   mutateTheme: Function
 }
 
-export default function Settings(props: Iprops) {
+const Settings: FC<Iprops> = ({ mutateTheme, themeUsed, themes }) => {
   const [modelSettingsState, setModelSettingsState] = useState(false)
-  const { mutateTheme, themeUsed, themes } = props
-
   const handleClickOpen = () => setModelSettingsState(true)
-
   const handleClose = () => setModelSettingsState(false)
 
   return (
@@ -25,7 +22,15 @@ export default function Settings(props: Iprops) {
           <IconSettings/>
         </ButtonSettings>
       </Tooltip>
-      <ModelSettings open={modelSettingsState} onClose={handleClose} mutateTheme={mutateTheme} themeUsed={themeUsed} themes={themes}/>
+      <ModelSettings
+        themes={themes}
+        onClose={handleClose}
+        themeUsed={themeUsed}
+        open={modelSettingsState}
+        mutateTheme={mutateTheme}
+      />
     </>
   )
 }
+
+export default Settings
