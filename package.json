@@ -1,6 +1,6 @@
 {
   "name": "organizador-arquivos",
-  "author": "Miguel da Penha",
+  "author": "Miguel Penha <miguel.penha1@gmail.com> (https://portfolio-miguelpenha.vercel.app)",
   "version": "1.0.2",
   "description": "Organizador de arquivos",
   "main": "./.webpack/main/index.js",
